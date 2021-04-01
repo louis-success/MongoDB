@@ -152,4 +152,73 @@ db.trips.find({ "$expr": { "$and": [ { "$gt": [ "$tripduration", 1200 ]},
 ```
 
 
+**Array Operators**
+
+$push 
+
+  * Add an element into an array
+  * Turns a field into an array field 
+
+
+Syntax:
+
+{"<array_field>": {"$size":<valueNumber>}} => size of the array field should match with the valuenumber exactly
+  
+{"<array_field>": {"$all":<array>}}. => array elements should match with all the given array elements regardless of their order
+  
+
+```
+mongo "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/admin"
+
+use sample_airbnb
+
+db.listingsAndReviews.find({ "amenities": {
+                                  "$size": 20,
+                                  "$all": [ "Internet", "Wifi",  "Kitchen",
+                                           "Heating", "Family/kid friendly",
+                                           "Washer", "Dryer", "Essentials",
+                                           "Shampoo", "Hangers",
+                                           "Hair dryer", "Iron",
+                                           "Laptop friendly workspace" ]
+                                         }
+                            }).pretty()
+
+```
+
+More functions
+
+```
+db.listingsAndReviews.find({ "amenities":
+        { "$size": 20, "$all": [ "Internet", "Wifi",  "Kitchen", "Heating",
+                                 "Family/kid friendly", "Washer", "Dryer",
+                                 "Essentials", "Shampoo", "Hangers",
+                                 "Hair dryer", "Iron",
+                                 "Laptop friendly workspace" ] } },
+                            {"price": 1, "address": 1}).pretty()
+
+
+db.listingsAndReviews.find({ "amenities": "Wifi" },
+                           { "price": 1, "address": 1, "_id": 0 }).pretty()
+
+
+db.listingsAndReviews.find({ "amenities": "Wifi" },
+                           { "price": 1, "address": 1,
+                             "_id": 0, "maximum_nights":0 }).pretty()
+
+
+```
+
+```
+use sample_training
+
+db.grades.findOne()
+
+db.grades.find({ "class_id": 431 },
+               { "scores": { "$elemMatch": { "score": { "$gt": 85 } } }
+             }).pretty()
+
+db.grades.find({ "scores": { "$elemMatch": { "type": "extra credit" } }
+               }).pretty()
+
+```
 
