@@ -62,3 +62,18 @@ db.<collection_Name>.drop()
 db.inspection.drop()
 ```
 
+**Comparison Operators**
+
+|operator|Description|
+|--------|-----------|
+|$eq|equal to =|
+|$ne|not equal to| !=
+|$lt|less than equal to <|
+|$gt|greater than equal to >|
+|$lte|less than or equal to <=|
+|$gte|greater than or equal to >=|
+
+
+
+
+
