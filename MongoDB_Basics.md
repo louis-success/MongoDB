@@ -131,6 +131,25 @@ db.routes.find({ "$and": [ { "$or" :[ { "dst_airport": "KZN" },
 
 ```
 
+**Expressive Query Operators - Aggregation expressions **
+
+$FieldName used to get the value of the field in expression
+
+$expr
+
+**Syntax:**
+
+{"$<operator>":{"<field>":"<Value>"}}
+
+```
+db.trips.find({ "$expr": { "$eq": [ "$end station id", "$start station id"] }
+              }).count()
+
+
+db.trips.find({ "$expr": { "$and": [ { "$gt": [ "$tripduration", 1200 ]},
+                         { "$eq": [ "$end station id", "$start station id" ]}
+                       ]}}).count()
+```
 
 
 
