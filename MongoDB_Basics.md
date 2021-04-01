@@ -3,6 +3,8 @@
 
 **Update Document through shell**
 
+$inc, $set, $push
+
 ```mongo "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/admin"
 use sample_training
 
