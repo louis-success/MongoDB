@@ -74,6 +74,63 @@ db.inspection.drop()
 |$gte|greater than or equal to >=|
 
 
+**Syntax:**
+{"field":{"operator":"value"}}
+
+**Example**
+{"salary":{"$gte":100000}}
+
+Query operators provides additional ways to locate data within the database.
+Comparision operators allows us to find data in the specified range.
+
+{<field>:{<operator>:<value>}}
+  
+  $eq is the default operator if it is not specified.
+
+```
+  use sample_training
+  
+  db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": { "$ne": "Subscriber" } }).pretty()
+
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": { "$eq": "Customer" }}).pretty()
+
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": "Customer" }).pretty()
+
+```
+
+**Logical Query operators**
+
+|operator|Description|
+|--------|-----------|
+|$and|Match all query clauses|
+|$or|Match atleast one query clause| 
+|$nor|Fail to match both the given clauses|
+|$not|Negate the query requirement|
+|$lte|less than or equal to <=|
+
+
+**Syntax:**
+
+{"$<operator>":[{<clause1>},{<clause2>}]}
+  
+{$not:{<clause1>}}
+
+
+```
+
+db.routes.find({ "$and": [ { "$or" :[ { "dst_airport": "KZN" },
+                                    { "src_airport": "KZN" }
+                                  ] },
+                          { "$or" :[ { "airplane": "CR2" },
+                                     { "airplane": "A81" } ] }
+                         ]}).pretty()
+
+
+```
+
 
 
 
