@@ -187,6 +187,18 @@ db.listingsAndReviews.find({ "amenities": {
 
 More functions
 
+db.<collections>.find({<query>},{<projections>});
+  
+ Projections specifies which field should or should not be included in the result set cursor.
+ 
+ field: 1 should include
+ field: 0 should not include
+ 
+ we have to use either 1 for all field or 0 we can't mix 1 & 0
+ the only case where we can mix is to use 0 for \_id:0, field:1
+ 
+ {<field>:{"$<elemMatch>":{"field":<value>}}}   => match the individual field value of an sub document.
+
 ```
 db.listingsAndReviews.find({ "amenities":
         { "$size": 20, "$all": [ "Internet", "Wifi",  "Kitchen", "Heating",
