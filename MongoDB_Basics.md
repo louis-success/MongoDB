@@ -234,3 +234,14 @@ db.grades.find({ "scores": { "$elemMatch": { "type": "extra credit" } }
 
 ```
 
+
+**Dot Notations to access nested documents**
+
+MQL uses dot notations to access the address of the nested documents in the document.
+To use the dot notation in the arrays, use the position of an element in the array.
+
+**Syntax:**
+
+db.<collections>.find({field.array element position.nested document field. chile element field})
+  
+  
