@@ -423,4 +423,26 @@ db.routes.find({ "src_airport": "MUC" }).pretty()
 
 ```
 
+**Data Modeling**
+
+Data modeling - a way to organize fields in a document to support your application performance and querying capabilities.
+
+**Rule of thumb** in data modeling with MongoDB :**data is stored in the way that it is used.**
+
+**Upsert**
+
+Update /(or) Insert = Upsert
+
+**Syntax**
+db.collection.UpdateOne({<Query>}, {<update>},{"Upsert":true});
+
+```
+db.iot.updateOne({ "sensor": r.sensor, "date": r.date,
+                   "valcount": { "$lt": 48 } },
+                         { "$push": { "readings": { "v": r.value, "t": r.time } },
+                        "$inc": { "valcount": 1, "total": r.value } },
+                 { "upsert": true })
+
+```
+
 
