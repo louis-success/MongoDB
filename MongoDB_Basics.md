@@ -344,6 +344,16 @@ db.listingsAndReviews.aggregate([
                                   { "$group": { "_id": "$address.country",
                                                 "count": { "$sum": 1 } } }
                                 ])
+                                
+db.listingsAndReviews.aggregate([
+                                   {
+                                     "$group":
+                                      {"_id" : "Category",
+                                      total:{"$sum" :"$price"}
+                                      }
+                                      
+                                   }
+                                ])
 
 ```
 
