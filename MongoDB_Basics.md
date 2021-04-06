@@ -290,8 +290,10 @@ db.listingsAndReviews.find({ "amenities": "Wifi" },
 ```
 
 **Aggregation Framework**
+Aggregate() allows as to compute and reshape the data in the cursor
+agrregate() can do what find() can do and more.
 
-MqL => filter & update
+MqL =>find() => filter & update
 Aggregation F/w => Compute & reshape
 Agg F/w extends the MQL 
 Stages
@@ -354,6 +356,31 @@ db.listingsAndReviews.aggregate([
                                       
                                    }
                                 ])
+
+```
+
+***Sorting & Limiting***
+
+Sort & Limit syntax:
+
+```
+sort({<field>:<order>})    // order =1 for ascending order =-1 for descending
+
+limit(<number of documents>)
+
+db.zips.find().sort({"zip":1}).limit(5)
+
+use sample_training
+
+db.zips.find().sort({ "pop": 1 }).limit(1)
+
+db.zips.find({ "pop": 0 }).count()
+
+db.zips.find().sort({ "pop": -1 }).limit(1)
+
+db.zips.find().sort({ "pop": -1 }).limit(10)
+
+db.zips.find().sort({ "pop": 1, "city": -1 })
 
 ```
 
