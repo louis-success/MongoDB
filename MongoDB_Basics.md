@@ -361,6 +361,9 @@ db.listingsAndReviews.aggregate([
 
 ***Sorting & Limiting- Cursor Methods***
 
+Limit must be used along with sort since mongo db will give random result of documents without sort.
+if you use limit and sort, sort will be applied first and then limit.
+
 |---------------------|
 |Cursor Methods|
 |--------------|
