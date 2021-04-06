@@ -359,7 +359,15 @@ db.listingsAndReviews.aggregate([
 
 ```
 
-***Sorting & Limiting***
+***Sorting & Limiting- Cursor Methods***
+
+|---------------------|
+|Cursor Methods|
+|--------------|
+|sort()|
+|limit()|
+|pretty()|
+|count()|
 
 Sort & Limit syntax:
 
