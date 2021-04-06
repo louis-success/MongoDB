@@ -433,6 +433,9 @@ Data modeling - a way to organize fields in a document to support your applicati
 
 Update /(or) Insert = Upsert
 
+Update action will happen if the is matching document found
+Insert action will happen if there is no matching document found.
+
 **Syntax**
 db.collection.UpdateOne({<Query>}, {<update>},{"Upsert":true});
 
