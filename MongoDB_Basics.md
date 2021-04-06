@@ -291,6 +291,29 @@ db.listingsAndReviews.find({ "amenities": "Wifi" },
 
 **Aggregation Framework**
 
+MqL => filter & update
+Aggregation F/w => Compute & reshape
+Agg F/w extends the MQL 
+Stages
+$group
+compute 
+reshape
+
+Nonfiltering stages & Filtering stages
+$match
+
+$Group syntax:
+
+```
+{
+  $group:
+  {
+    "_id":<expression>,  //Group by expression
+    <field1>: {<accumulator1>:<expression1>}     
+  }
+}
+```
+
 ```
 db.listingsAndReviews.aggregate([
                                   { "$match": { "amenities": "Wifi" } },
