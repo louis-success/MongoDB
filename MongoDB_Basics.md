@@ -394,5 +394,33 @@ db.zips.find().sort({ "pop": -1 }).limit(10)
 db.zips.find().sort({ "pop": 1, "city": -1 })
 
 ```
+**Indexes**
+
+Makes queries even more efficient
+One of the most impactful way to improve performance of query.
+
+```
+use sample_training
+
+db.trips.find({ "birth year": 1989 })
+
+db.trips.find({ "start station id": 476 }).sort( { "birth year": 1 } )
+
+db.trips.createIndex({ "birth year": 1 })
+
+db.trips.createIndex({ "start station id": 1, "birth year": 1 })
+
+```
+
+```
+db.routes.find({ "src_airport": "MUC" }).pretty()
+
+
+    This is correct.
+
+    It doesn't really matter whether the index was created in increasing or decreasing order when it is a simple single-field index.
+
+
+```
 
 
