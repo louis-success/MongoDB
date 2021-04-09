@@ -133,4 +133,44 @@ collection.UpdateOne(filter, replacement);
 collection.DeleteOne(c=>c.Id == 1);
 
 
+**Async Programming**
+
+return await collection.Find(Builder<Car>.Filter.Empty).FirstOrDefaultAsync(cancellationToken); //cancellationToken is optional
+    
+**Builders******
+
+Builder<BsonDocumentModelType>.Filter.Eq("field", "value")
+Builder<BsonDocumentModelType>.Filter.Lt("field", "value")
+Builder<BsonDocumentModelType>.Filter.Gt("field", "value")
+Builder<BsonDocumentModelType>.Filter.Ge("field", "value")
+Builder<BsonDocumentModelType>.Filter.Le("field", "value")
+Builder<BsonDocumentModelType>.Filter.Ne("field", "value")
+Builder<BsonDocumentModelType>.Filter.In("field",new strin[]{string1, string2});
+
+**Builder Projection**
+var projection = Builder<BsonDocumentModelType>.Projections.Include(m=>m.property1)
+    .Include(m=>m.Proerty2)
+    .Exclude(m=>m.Id);
+    
+ collections.find<car>(filter).project<car>(projection).FirstOrDefaultAsync();
+ 
+**Builder Sort**
+
+var builderSort = Builder<Movie>.Sort.Ascending(m=>d.year);
+    
+ collections.find<car>(filter).project<car>(projection).sort(builderSort).FirstOrDefaultAsync();
+    
+ **Advanced Queries**
+    
+ movieCollection.Find<Movie>(filter).Sort(new BsonDocument("year", 1))
+    .Limit(10);
+    
+movieCollection.Find<Movie>(filter).Sort(new BsonDocument("year", 1))
+    .Limit(moviesPerPage)
+    .Skip(pageNumer*moviesPerPage)
+    .ToListAsync();
+    
+
+
+
 
