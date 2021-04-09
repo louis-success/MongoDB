@@ -22,3 +22,34 @@ Nuget package manager has MongoDb.Driver package which we have to install and th
   
 ```
 
+**MQL for price >400 & price<600:**
+
+db.collection.find({"$and":[{"price":{"$lt":"400"},{"price":{"$gt":"600"}}]})
+
+**Bson document syntax:**
+
+var filters= new BsonDocument("$and,new BsonArray{
+new BsonDocument("price", new BsonDocument("$gt", 400)),
+new BsonDocument("price", new BsonDocument("lt", 600))
+});
+
+**Builders syntax:**
+
+
+MongoDB Drivers[MongoDB.Drivers] provides Builders class
+
+```
+using MongoDB.Drivers
+
+var builder = Builders<BsonDocument>.Filters;
+
+var filter = builder.Gt("price", 400) & builder.Lt("price", 600);
+
+var client = new MongoClient("connectionString");
+var db = client.GetDatabase("DbName");
+var collection = db.GetCollection("CollectionName");
+
+var result = collection.find(filter);
+
+```
+
