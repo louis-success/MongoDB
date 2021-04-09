@@ -21,7 +21,9 @@ Nuget package manager has MongoDb.Driver package which we have to install and th
   var data = collection.find("{id:1234}").FirstOrDefault();
   
 ```
+There are many ways to work with MongoDB driver.
 
+No single approach is right way
 **MQL for price >400 & price<600:** Pass MQL as string
 
 db.collection.find({"$and":[{"price":{"$lt":"400"},{"price":{"$gt":"600"}}]})
@@ -41,7 +43,7 @@ MongoDB Drivers[MongoDB.Drivers] provides Builders class
 ```
 using MongoDB.Drivers
 
-var builder = Builders<BsonDocument>.Filters;
+var builder = Builders<BsonDocument C# Model Type i.e., Car>.Filters;
 
 var filter = builder.Gt("price", 400) & builder.Lt("price", 600);
 
@@ -57,7 +59,9 @@ using your c# mongo db driver c# model class is mapped with Mongo db Bson Docume
 It will takes care of pascal convension C# property to lower case mongo db document elements.
 also any C# model class property is mapped with \_id property of mongodb bson document by decorating the c# property with [BsonId] attribute.
 
+**Mapping Class**
 ```
+
 [BsonId]
 public int Id {get; set;}     //will be mapped to \_id of mongo db bsondodcument
 
@@ -87,3 +91,46 @@ public double SellingPrice {get; set; }
 
 }
 ```
+
+**LINQ with the MongoDB Driver**
+```
+var client = new MongoClient("connectionString");
+var db = client.GetDatabase("Dealers");
+var collection = db.GetCollection<Car>("cars");
+
+var result = collection.find(car=>car.price >1000000).ToList();
+```
+
+var car = new Car(){
+Id =1,
+Manufacturer = "MAruti",
+ModelName = "Swift",
+SellingPrice = 700000
+};
+**InSert Record**
+collection.InsertOne(car);
+
+**Update Record**
+var filter = new BsonDocument("Id",1);
+var replace = new BsonDocument{{"Id" ,123},{"price" , 800000}};
+var result = collection.ReplaceOne(filter,replace); //**ReplaceOne(filter, replace);**
+
+var filter = new BsonDocument("Id",1);
+var replace = new BsonDocument("$set", new BsonDocument("price",800000));
+var updateOptions = new UpdateOptions {"IsUpsert"= 1};
+var result = collection.UpdateOne(filter,replace, updateOptions); //**UpdateOne(filter, replace, updateOptions);**
+
+**Update with Mapping Class, Builder & LINQ**
+
+```
+var filter = Builder<Car>.Filter.Eq(c=>c.Id, 1);
+var replacement = Builder<Car>.Update.Set(c=>c.SellingPrice, 800000);
+collection.UpdateOne(filter, replacement);
+```
+
+**Delete record**
+
+collection.DeleteOne(c=>c.Id == 1);
+
+
+
