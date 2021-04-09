@@ -22,11 +22,11 @@ Nuget package manager has MongoDb.Driver package which we have to install and th
   
 ```
 
-**MQL for price >400 & price<600:**
+**MQL for price >400 & price<600:** Pass MQL as string
 
 db.collection.find({"$and":[{"price":{"$lt":"400"},{"price":{"$gt":"600"}}]})
 
-**Bson document syntax:**
+**Bson document syntax:**.  Use nested bson document
 
 var filters= new BsonDocument("$and,new BsonArray{
 new BsonDocument("price", new BsonDocument("$gt", 400)),
@@ -52,4 +52,38 @@ var collection = db.GetCollection("CollectionName");
 var result = collection.find(filter);
 
 ```
+using your c# mongo db driver c# model class is mapped with Mongo db Bson Document.
 
+It will takes care of pascal convension C# property to lower case mongo db document elements.
+also any C# model class property is mapped with \_id property of mongodb bson document by decorating the c# property with [BsonId] attribute.
+
+```
+[BsonId]
+public int Id {get; set;}     //will be mapped to \_id of mongo db bsondodcument
+
+public double Price {get; set;}    //will be mapped to price element of mongodb bsondocument
+
+Also you can map any field to specific bson document element/property using [BsonElement("<PropertyName>")] attribute
+
+{
+_id : 0,
+make : "Maruti",
+model: "Swift",
+price: 700000
+}
+
+
+public class Car
+{
+[BsonId]
+public int Id {get; set; }
+[BsonElement("make")]
+public string Manufacturer {get; set; }
+[BsonElement("model")]
+public string ModelName {get; set; }
+[BsonElement("price")]
+public double SellingPrice {get; set; }
+}
+
+}
+```
