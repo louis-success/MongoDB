@@ -51,4 +51,117 @@ await _usersCollection
 
 ```
 
+********Joins******
 
+$lookup is the pipe we are using for this in the pipeline
+
+
+Compass UI  "Aggregation framework"
+
+$Match Stage :
+
+```
+{
+  "year":{"$gt":"1980", "$lt":"1990"}
+}
+```
+$lookup Stage
+```
+{
+  from: 'comments',
+  //localField: '_id',
+  //foreignField: 'movie_id',
+  let:{'id':'$_id'},
+  pipeline:[{'$match':{'$expr':{'$eq':['$movie_id','$$id']}}},{'$count':'count'}],
+  as: 'Movie_comments'
+}
+```
+
+When we export to C# language
+
+```
+new BsonArray
+{
+    new BsonDocument("$match", 
+    new BsonDocument("year", 
+    new BsonDocument
+            {
+                { "$gt", "1980" }, 
+                { "$lt", "1990" }
+            })),
+    new BsonDocument("$lookup", 
+    new BsonDocument
+        {
+            { "from", "comments" }, 
+            { "let", 
+    new BsonDocument("id", "$_id") }, 
+            { "pipeline", 
+    new BsonArray
+            {
+                new BsonDocument("$match", 
+                new BsonDocument("$expr", 
+                new BsonDocument("$eq", 
+                new BsonArray
+                            {
+                                "$movie_id",
+                                "$$id"
+                            }))),
+                new BsonDocument("$count", "count")
+            } }, 
+            { "as", "Movie_comments" }
+        })
+}
+```
+
+**Perform the same lookup with MQL**
+
+```
+var filter = new BsonDocument[]
+{
+  new BsonDocument("$match", 
+    new BsonDocument("year",  
+      new BsonDocument{
+        {"$gt", 1980},
+        {"$lt", 1990}
+      })),
+  new BsonDocument("$lookup", 
+    new BsonDocument{
+      {"from":"comment"},
+      {"let": new BsonDocument("id","_id")},
+      {"pipeline": BsonArray{
+        new BsonDocument("$match",
+          new BsonDocument("$expr",
+            new BsonDocument("$eq",
+                new BsonArray {
+                "$movie_id",
+                "$$id"
+                }
+             )
+           )
+         ),
+         new BsonDocument("$count", "count")
+         }
+       },
+       {"as":"movie_comments"}
+       
+       })
+ };
+         
+ var pipeline = PipelineDefinition<Movie,BsonDocument>.Create(filter);
+ 
+ var movies = _moviesCollection.Aggreation(pipeline).toList();
+ ```
+ **Perform the same lookup with MongoDB C# driver**
+
+
+```
+var movies = _moviesCollection.Aggregate()
+            .Match(m=>(int)m.year <1990 && (int)m.year>1980)
+            .LookUp(
+              _commentsCollection,
+              m=>m.id,
+              c=>c.movie_id,
+              (movie m)=>m.comments).ToList()
+              
+ 
+ 
