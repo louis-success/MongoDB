@@ -172,4 +172,16 @@ var movies = _moviesCollection.Aggregate()
  local       => Reads the data from the primary node
  Majority    => Reads the data which replicated in majority of the nodes.
  
+ **BulkWrite**
+ 
+ Multiple runtriple to update multiple writes. To avoid it, send the documents in bulk and get only one ack for the bulkwrite. With this we can achieve single roundtrip for the bulk write.
+ 
+ db.collection.bulkWrite([
+ updateOne:{}
+ updateOne:{}
+ ],
+ {"ordered":false}
+ );
+ 
+ By default mongodb is ordered, any single write is failed then subsequents writes will not happen and bulk ack will return false
  
