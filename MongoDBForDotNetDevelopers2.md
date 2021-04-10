@@ -180,7 +180,7 @@ var movies = _moviesCollection.Aggregate()
  updateOne:{}
  updateOne:{}
  ],
- {"ordered":false}
+ {ordered:false}
  );
  
  By default mongodb is ordered, any single write is failed then subsequents writes will not happen and bulk ack will return false
