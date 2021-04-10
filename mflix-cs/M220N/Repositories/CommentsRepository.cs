@@ -33,6 +33,7 @@ namespace M220N.Repositories
         /// <param name="comment"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>The Movie associated with the comment.</returns>
+        [Obsolete]
         public async Task<Movie> AddCommentAsync(User user, ObjectId movieId, string comment,
             CancellationToken cancellationToken = default)
         {
@@ -50,6 +51,7 @@ namespace M220N.Repositories
                 // Ticket: Add a new Comment
                 // Implement InsertOneAsync() to insert a
                 // new comment into the comments collection.
+                await _commentsCollection.InsertOneAsync(newComment, cancellationToken);
 
                 return await _moviesRepository.GetMovieAsync(movieId.ToString(), cancellationToken);
             }
@@ -77,13 +79,12 @@ namespace M220N.Repositories
             // existing comment. Remember that only the original
             // comment owner can update the comment!
             //
-            // // return await _commentsCollection.UpdateOneAsync(
-            // // Builders<Comment>.Filter.Where(...),
-            // // Builders<Comment>.Update.Set(...).Set(...),
-            // // new UpdateOptions { ... } ,
-            // // cancellationToken);
+            return await _commentsCollection.UpdateOneAsync(
+            Builders<Comment>.Filter.Where(c=>c.Id == commentId && c.Email == user.Email),
+            Builders<Comment>.Update.Set(c=>c.Text, comment).Set(c=>c.Date, DateTime.Now),
+            new UpdateOptions { IsUpsert = false },
+            cancellationToken);
 
-            return null;
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace M220N.Repositories
             _commentsCollection.DeleteOne(
                 Builders<Comment>.Filter.Where(
                     c => c.MovieId == movieId
-                         && c.Id == commentId));
+                         && c.Id == commentId && c.Email == user.Email));
 
             return await _moviesRepository.GetMovieAsync(movieId.ToString(), cancellationToken);
         }
@@ -127,11 +128,19 @@ namespace M220N.Repositories
                 // Return the 20 users who have commented the most on MFlix. You will need to use
                 // the Group, Sort, Limit, and Project methods of the Aggregation pipeline.
                 //
-                // // result = await _commentsCollection
-                // //   .WithReadConcern(...)
-                // //   .Aggregate()
-                // //   .Group(...)
-                // //   .Sort(...).Limt(...).Project(...).ToListAsync()
+
+                result = await _commentsCollection
+                  .WithReadConcern(ReadConcern.Majority)
+                  .Aggregate()
+                  //.Group(new BsonDocument { { "_id", "$Email" }, { "count", new BsonDocument("$sum", 1) } })
+                  .Group(new BsonDocument{{ "_id", "$email" },
+            {
+                    "count",
+    new BsonDocument("$sum", 1) }})
+                  .Sort(new BsonDocument { { "count", -1 } })
+                  .Limit(20)
+                  .Project<ReportProjection>(new BsonDocument { {"_id", 1 }, { "count", 1} })
+                  .ToListAsync();
 
                 return new TopCommentsProjection(result);
             }

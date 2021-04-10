@@ -1,27 +1,29 @@
 ﻿<Properties StartupConfiguration="{1F6998EB-7228-4A65-96AE-5FB41A0B1475}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="M220NTests/MoviesRepositoryTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="M220N/appsettings.json">
     <Files>
-      <File FileName="M220N/Repositories/RepositoryExtensions.cs" Line="1" Column="1" />
-      <File FileName="M220N/Repositories/UsersRepository.cs" />
-      <File FileName="M220N/appsettings.json" />
-      <File FileName="M220N/Repositories/MoviesRepository.cs" />
-      <File FileName="M220N/Controllers/MovieController.cs" />
-      <File FileName="M220N/Program.cs" />
-      <File FileName="M220NTests/MoviesRepositoryTests.cs" Line="119" Column="10" />
+      <File FileName="M220N/Repositories/UsersRepository.cs" Line="116" Column="1" />
+      <File FileName="M220N/JwtAuthentication.cs" Line="22" Column="46" />
+      <File FileName="M220NTests/UsersRepositoryTests.cs" Line="117" Column="1" />
+      <File FileName="M220N/Repositories/MoviesRepository.cs" Line="102" Column="1" />
+      <File FileName="M220NTests/MoviesRepositoryTests.cs" Line="43" Column="23" />
+      <File FileName="M220N/Repositories/CommentsRepository.cs" Line="139" Column="35" />
+      <File FileName="M220N/Models/Comment.cs" Line="19" Column="23" />
+      <File FileName="M220NTests/CommentsRepositoryTests.cs" Line="27" Column="29" />
+      <File FileName="Migrator/Program.cs" Line="72" Column="105" />
+      <File FileName="M220N/appsettings.json" Line="11" Column="50" />
+      <File FileName="M220N/Program.cs" Line="10" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="M220N" expanded="True">
             <Node name="M220N" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Projections" expanded="True" />
-              </Node>
               <Node name="Repositories" expanded="True" />
+              <Node name="appsettings.json" selected="True" />
             </Node>
-            <Node name="M220NTests" expanded="True">
-              <Node name="MoviesRepositoryTests.cs" selected="True" />
+            <Node name="M220NTests" expanded="True" />
+            <Node name="Migrator" expanded="True">
+              <Node name="Dependencies" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -33,14 +35,17 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Migrator PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.M220N PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Repositories/MoviesRepository.cs" relfile="M220N/Repositories/MoviesRepository.cs" line="142" column="1" />
-      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Controllers/MovieController.cs" relfile="M220N/Controllers/MovieController.cs" line="68" column="1" />
-      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Controllers/MovieController.cs" relfile="M220N/Controllers/MovieController.cs" line="69" column="1" />
+      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Repositories/UsersRepository.cs" relfile="M220N/Repositories/UsersRepository.cs" line="183" column="1" />
+      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Repositories/UsersRepository.cs" relfile="M220N/Repositories/UsersRepository.cs" line="169" column="1" />
+      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Repositories/UsersRepository.cs" relfile="M220N/Repositories/UsersRepository.cs" line="157" column="1" />
+      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Repositories/UsersRepository.cs" relfile="M220N/Repositories/UsersRepository.cs" line="237" column="1" />
+      <Breakpoint file="/Users/louisrajulaganathan/Projects/MongoDB/mflix-cs/M220N/Repositories/MoviesRepository.cs" relfile="M220N/Repositories/MoviesRepository.cs" line="102" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

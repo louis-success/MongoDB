@@ -18,7 +18,7 @@ namespace Migrator
         static IMongoCollection<Movie> _moviesCollection;
 
         // TODO: Update this connection string as needed.
-        static string mongoConnectionString = "";
+        static string mongoConnectionString = "mongodb://m220student:m220password@mflix-shard-00-00.gcgrf.mongodb.net:27017,mflix-shard-00-01.gcgrf.mongodb.net:27017,mflix-shard-00-02.gcgrf.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-ppqo21-shard-0&authSource=admin&retryWrites=true&w=majority";
         
         static async Task Main(string[] args)
         {
@@ -37,7 +37,17 @@ namespace Migrator
                 //
                 // // bulkWriteDatesResult = await _moviesCollection.BulkWriteAsync(...
 
-                Console.WriteLine($"{bulkWriteDatesResult.ProcessedRequests.Count} records updated.");
+                var listWrites = new List<WriteModel<Movie>>();
+                for (var i = 0; i < datePipelineResults.Count; i++)
+                {
+                    var filterDefinition = Builders<Movie>.Filter.Eq(p => p.Id, datePipelineResults[i].Id);
+
+                    listWrites.Add(new ReplaceOneModel<Movie>(filterDefinition, datePipelineResults[i]));
+                }
+
+                bulkWriteDatesResult = await _moviesCollection.BulkWriteAsync(listWrites);
+
+               Console.WriteLine($"{bulkWriteDatesResult.ProcessedRequests.Count} records updated.");
             }
 
             var ratingPipelineResults = TransformRatingPipeline();
@@ -51,7 +61,14 @@ namespace Migrator
                 // (https://api.mongodb.com/csharp/current/html/T_MongoDB_Driver_ReplaceOneModel_1.htm).
                 //
                 // // bulkWriteRatingsResult = await _moviesCollection.BulkWriteAsync(...
+                var listWrites = new List<WriteModel<Movie>>();
+                for (var i = 0; i < ratingPipelineResults.Count; i++)
+                {
+                    var filterDefinition = Builders<Movie>.Filter.Eq(p => p.Id, ratingPipelineResults[i].Id);
 
+                    listWrites.Add(new ReplaceOneModel<Movie>(filterDefinition, ratingPipelineResults[i]));
+                }
+                bulkWriteRatingsResult = await _moviesCollection.BulkWriteAsync(listWrites);
                 Console.WriteLine($"{bulkWriteRatingsResult.ProcessedRequests.Count} records updated.");
             }
 

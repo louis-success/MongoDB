@@ -84,20 +84,29 @@ namespace M220N.Repositories
         {
             try
             {
+                movieId = "";
                 return await _moviesCollection.Aggregate()
                     .Match(Builders<Movie>.Filter.Eq(x => x.Id, movieId))
+                    .Lookup(
+                    _commentsCollection,   //foreign collection
+                    m => m.Id,            //local field
+                    c => c.MovieId,           //foreign field
+                    (Movie m)=>m.Comments
+                    )
                     // Ticket: Get Comments
                     // Add a lookup stage that includes the
                     // comments associated with the retrieved movie
                     .FirstOrDefaultAsync(cancellationToken);
             }
 
-            catch (Exception ex)
+            catch (FormatException ex)
             {
                 // TODO Ticket: Error Handling
                 // Catch the exception and check the exception type and message contents.
                 // Return null if the exception is due to a bad/missing Id. Otherwise,
                 // throw.
+                if (ex.Message.Contains("is not a valid 24 digit hex string"))
+                    return null;
 
                 throw;
             }
@@ -251,8 +260,12 @@ namespace M220N.Repositories
             // I am the pipeline that runs all of the stages
             var pipeline = new[]
             {
-                matchStage,
+                matchStage,                
                 sortStage,
+                
+                skipStage,
+                limitStage,
+                facetStage
                 // add the remaining stages in the correct order
 
             };
