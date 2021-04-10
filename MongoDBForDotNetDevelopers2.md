@@ -164,4 +164,12 @@ var movies = _moviesCollection.Aggregate()
               (movie m)=>m.comments).ToList()
               
  
+ ```
+ **Read Concern**
+ 
+ AS WriteConcern, ReadConcern allows to specify the read isolation between nodes.
+ 
+ local       => Reads the data from the primary node
+ Majority    => Reads the data which replicated in majority of the nodes.
+ 
  
