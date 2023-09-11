@@ -25,6 +25,10 @@ The MongoDB Query API can be used two ways:
 CRUD Operations
 Aggregation Pipelines
 
+Aggregation operations allow you to group, sort, perform calculations, analyze data, and much more.
+
+Aggregation pipelines can have one or more "stages". The order of these stages are important.
+
 
 $inc, $set, $push
 
