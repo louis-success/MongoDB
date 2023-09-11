@@ -3,6 +3,8 @@
 
 **Update Document through shell**
 
+MongoDB is a document database. It stores data in a type of JSON format called BSON.
+
 $inc, $set, $push
 
 ```mongo "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/admin"
