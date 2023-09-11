@@ -6,9 +6,24 @@
 MongoDB is a document database. It stores data in a type of JSON format called BSON.
 
 Records in a MongoDB database are called documents, and the field values may include numbers, strings, booleans, arrays, or even nested documents.
-**SQL vs Document Databases**
+<br/>**SQL vs Document Databases**
 SQL databases are considered relational databases. They store related data in separate tables. When data is needed, it is queried from multiple tables to join the data back together.
-MongoDB stores data in flexible documents. Instead of having multiple tables you can simply keep all of your related data together.
+<br/>MongoDB stores data in flexible documents. Instead of having multiple tables you can simply keep all of your related data together.
+
+<br/>
+**Local vs Cloud Database**
+<br/>MongoDB can be installed locally, which will allow you to host your own MongoDB server on your hardware. This requires you to manage your server, upgrades, and any other maintenance
+
+<br/>MongoDB Atlas, a cloud database platform.
+
+<br/>**MongoDB Query API**
+<br/>
+The MongoDB Query API is the way you will interact with your data.
+
+The MongoDB Query API can be used two ways:
+
+CRUD Operations
+Aggregation Pipelines
 
 
 $inc, $set, $push
