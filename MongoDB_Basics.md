@@ -6,6 +6,10 @@
 MongoDB is a document database. It stores data in a type of JSON format called BSON.
 
 Records in a MongoDB database are called documents, and the field values may include numbers, strings, booleans, arrays, or even nested documents.
+**SQL vs Document Databases**
+SQL databases are considered relational databases. They store related data in separate tables. When data is needed, it is queried from multiple tables to join the data back together.
+MongoDB stores data in flexible documents. Instead of having multiple tables you can simply keep all of your related data together.
+
 
 $inc, $set, $push
 
